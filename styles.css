@@ -1,0 +1,138 @@
+/* Genel stiller */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    position: fixed; /* Üst kısmın sabit kalmasını sağlar */
+    top: 0; /* Üst kenara hizalar */
+    left: 0; /* Sol kenara hizalar */
+    right: 0; /* Sağ kenara hizalar */
+    z-index: 1000; /* Diğer içeriklerin üstünde kalmasını sağlar */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #417197; /* Arka plan rengi */
+    color: #fff; /* Metin rengi */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Gölge ekler */
+}
+
+.container {
+    padding-top: 60px; /* Üst kısım yüksekliği kadar boşluk ekler */
+}
+
+.logo-container img {
+    width: 50px; /* Logo genişliği */
+    height: auto; /* Logo yüksekliği otomatik */
+}
+
+.company-info {
+    display: flex;
+    align-items: center;
+}
+
+.company-info h2 {
+    margin-left: 10px; /* Şirket ismi ile logo arasındaki boşluk */
+    font-size: 18px; /* Yazı tipi boyutu */
+}
+
+/* Arama kutusu stilleri */
+.search-box-wrapper {
+    position: relative;
+}
+
+label {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: #fff;
+}
+
+input {
+    padding: 12px 20px;
+    border-radius: 25px;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.5);
+    font-size: 16px;
+    color: #333;
+    width: 250px;
+    transition: background-color 0.3s ease;
+}
+
+input::placeholder {
+    color: #ccc;
+}
+
+input:focus {
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+/* Arama kutusunu daha hoş hale getir */
+.search-box-container {
+    margin-left: auto;
+    margin-right: 20px;
+    position: relative;
+}
+
+label {
+    margin-right: 5px;
+    font-size: 14px; /* Etiket yazı tipi boyutu */
+}
+
+input {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px; /* Giriş kutusu yazı tipi boyutu */
+}
+
+/* Arama sembolü */
+.search-box-container::after {
+    content: '\1F50E'; /* Unicode'daki arama sembolü */
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: #fff;
+}
+
+/* Anlık ve saatlik veriler kutuları */
+.anlik-veriler-kutusu,
+.saatlik-veriler-kutusu {
+    width: calc(50% - 20px); /* Sayfanın yarısı kadar genişlikte */
+    margin-right: 20px; /* Sağ boşluk */
+    vertical-align: top; /* Yukarı hizalama */
+}
+
+/* Saatlik veriler kutusu için sağ boşluğu sıfırla */
+.saatlik-veriler-kutusu {
+    margin-right: 0;
+}
+
+.anlik-veriler-kutusu,
+.saatlik-veriler-kutusu {
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.anlik-veriler-kutusu h2 {
+    color: #333;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.anlik-veriler-icerik p {
+    margin: 5px 0;
+    font-size: 16px;
+    color: #555;
+}
