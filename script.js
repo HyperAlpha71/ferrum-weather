@@ -111,6 +111,11 @@ function updateBackground(weatherCode) {
 function koordinatBul() {
     var yerAdi = document.getElementById('yerAdi').value;
 
+    // Show loading message
+    var loadingMessage = document.getElementById('loadingMessage');
+    loadingMessage.classList.add('show');
+    loadingMessage.style.display = 'block';
+
     fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${yerAdi}`)
         .then(response => response.json())
         .then(data => {
@@ -125,6 +130,11 @@ function koordinatBul() {
         .catch(error => {
             console.error('Koordinat bilgisi alınamadı:', error);
             document.getElementById('sonuclar').innerHTML = '<p class="koordinatlar">Koordinat bilgisi alınamadı.</p>';
+        })
+        .finally(() => {
+            // Hide loading message after fetching data
+            loadingMessage.classList.remove('show');
+            loadingMessage.style.display = 'none';
         });
 }
 
