@@ -1,41 +1,13 @@
 /* Genel stiller */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', sans-serif; /* Updated font for modern look */
     margin: 0;
     padding: 0;
     transition: background 2s ease; /* Smoother transition for background */
-    background: linear-gradient(to right, #6a11cb, #2575fc); /* Gradient background */
+    background: linear-gradient(to right, #00c6ff, #0072ff); /* Updated gradient for a more vibrant look */
 }
 
-/* Loading Overlay */
-.loading-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999; /* Ensure it is on top */
-}
-
-.loading-spinner {
-    border: 8px solid #f3f3f3; /* Light grey */
-    border-top: 8px solid #3498db; /* Blue */
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 1s linear infinite; /* Spinner animation */
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
+/* Header */
 .header {
     position: fixed; /* Üst kısmın sabit kalmasını sağlar */
     top: 0; /* Üst kenara hizalar */
@@ -46,9 +18,9 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 10px;
-    background-color: #417197; /* Arka plan rengi */
+    background-color: #005f73; /* Updated header color */
     color: #fff; /* Metin rengi */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Gölge ekler */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Slightly darker shadow */
 }
 
 .container {
@@ -67,7 +39,7 @@ body {
 
 .company-info h2 {
     margin-left: 10px; /* Şirket ismi ile logo arasındaki boşluk */
-    font-size: 18px; /* Yazı tipi boyutu */
+    font-size: 20px; /* Updated font size */
 }
 
 /* Arama kutusu stilleri */
@@ -88,7 +60,7 @@ input {
     padding: 12px 20px;
     border-radius: 25px;
     border: none;
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.8); /* More opaque */
     font-size: 16px;
     color: #333;
     width: 250px;
@@ -101,7 +73,7 @@ input::placeholder {
 
 input:focus {
     outline: none;
-    background-color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(255, 255, 255, 1); /* Fully opaque on focus */
 }
 
 /* Arama kutusunu daha hoş hale getir */
@@ -149,16 +121,16 @@ input {
 
 .anlik-veriler-kutusu,
 .saatlik-veriler-kutusu {
-    background-color: #f5f5f5;
+    background-color: #e0fbfc; /* Updated background color */
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* More pronounced shadow */
     margin-bottom: 20px;
 }
 
 .anlik-veriler-kutusu h2 {
     color: #333;
-    font-size: 20px;
+    font-size: 22px; /* Updated font size */
     margin-bottom: 10px;
 }
 
@@ -166,4 +138,43 @@ input {
     margin: 5px 0;
     font-size: 16px;
     color: #555;
+}
+
+/* Loading Message Styles */
+.loading-message {
+    font-size: 22px; /* Increased font size for better visibility */
+    color: #ffffff; /* White color for better visibility */
+    text-align: center;
+    margin-top: 10px; /* Adjusted margin for better spacing */
+    opacity: 0; /* Start hidden */
+    transition: opacity 0.5s ease; /* Fade-in effect */
+    position: fixed; /* Center it on the screen */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center it */
+    z-index: 1001; /* Ensure it is above other content */
+}
+
+.loading-message.show {
+    opacity: 1; /* Show when class is added */
+}
+
+.loading-spinner {
+    border: 8px solid #f3f3f3; /* Light grey */
+    border-top: 8px solid #ffffff; /* White for better visibility */
+    border-radius: 50%;
+    width: 70px; /* Increased size for better visibility */
+    height: 70px; /* Increased size for better visibility */
+    animation: spin 1.5s linear infinite; /* Extended spinner animation duration */
+}
+
+
+/* Background Blur Effect */
+body.loading {
+    filter: blur(5px); /* Apply blur effect to the background */
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
