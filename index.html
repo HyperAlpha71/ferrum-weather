@@ -7,12 +7,6 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Loading Section -->
-    <div id="loading" class="loading-overlay">
-        <div class="loading-spinner"></div>
-        <p>Yükleniyor...</p>
-    </div>
-
     <div class="header">
         <div class="company-info">
             <div class="logo-container">
@@ -33,16 +27,16 @@
     </div>
     <div class="container">
         <h1>Hava Durumu</h1>
+        <!-- Loading Message -->
+        <div id="loadingMessage" class="loading-message" style="display: none;">
+            <div class="loading-spinner"></div>
+            Arandığına dair konum saptanıyor, veriler alınıyor...
+        </div>
         <!-- Anlık veriler kutusu -->
         <div class="anlik-veriler-kutusu" id="anlikVerilerDiv">
             <!-- Anlık veriler buraya gelecek -->
         </div>
         <!-- /Anlık veriler kutusu -->
-        <!-- Saatlik veriler kutusu -->
-        <div class="saatlik-veriler-kutusu" id="saatlikVerilerDiv">
-            <!-- Saatlik veriler buraya gelecek -->
-        </div>
-        <!-- /Saatlik veriler kutusu -->
     </div>
 
     <script src="script.js"></script>
