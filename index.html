@@ -20,23 +20,23 @@
             <div class="search-box-inner">
                 <div class="search-box-wrapper">
                     <label for="yerAdi"></label>
-                    <input type="text" id="yerAdi">
+                    <input type="text" id="yerAdi" placeholder="Şehir veya konum ara..." style="font-size: 18px; padding: 15px; border-radius: 30px;">
                 </div>
             </div>
         </div>
+        <a href="user-info.html" class="view-details">Kullanıcı Bilgileri</a>
     </div>
     <div class="container">
         <h1>Hava Durumu</h1>
         <!-- Loading Message -->
         <div id="loadingMessage" class="loading-message" style="display: none;">
             <div class="loading-spinner"></div>
-            Arandığına dair konum saptanıyor, veriler alınıyor...
+            <p>Arandığına dair konum saptanıyor, veriler alınıyor...</p>
         </div>
         <!-- Anlık veriler kutusu -->
         <div class="anlik-veriler-kutusu" id="anlikVerilerDiv">
             <!-- Anlık veriler buraya gelecek -->
         </div>
-        <!-- /Anlık veriler kutusu -->
     </div>
 
     <script src="script.js"></script>
