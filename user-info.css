@@ -1,0 +1,30 @@
+/* User Information Page Styles */
+.user-info-container {
+    margin-top: 20px; /* Space above the table */
+    padding: 20px; /* Increased padding around the table */
+    background-color: #f0f8ff; /* Light background for the table section */
+    border-radius: 10px; /* More rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* More pronounced shadow */
+}
+
+#userInfoTable {
+    width: 100%; /* Full width */
+    border-collapse: collapse; /* Collapse borders */
+}
+
+#userInfoTable th, #userInfoTable td {
+    padding: 15px; /* Increased padding inside cells */
+    text-align: left; /* Align text to the left */
+    border-bottom: 1px solid #ddd; /* Bottom border for rows */
+    font-size: 16px; /* Increased font size for better readability */
+}
+
+#userInfoTable th {
+    background-color: #0072ff; /* Header background color */
+    color: white; /* Header text color */
+    font-weight: bold; /* Bold header text */
+}
+
+#userInfoTable tr:hover {
+    background-color: #e0f7fa; /* Highlight row on hover */
+}
