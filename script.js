@@ -1,6 +1,5 @@
 // Hava durumu sembollerini döndüren yardımcı fonksiyon
 function getWeatherSymbol(weatherCode) {
-    // Hava durumu kodlarını sembollerle ve açıklamalarıyla eşleştiren bir nesne
     var weatherSymbols = {
         0: { emoji: '☀️', description: 'Açık Hava' },
         1: { emoji: '🌤️', description: 'Çoğunlukla Açık' },
@@ -32,99 +31,28 @@ function getWeatherSymbol(weatherCode) {
         99: { emoji: '🌩️❄️', description: 'Şiddetli Dolu ve Gök Gürültülü Sağanak Yağış' }
     };
 
-    // Hava durumu sembolünü oluştur
     var weatherSymbol = '';
     if (weatherCode in weatherSymbols) {
-        weatherSymbol = `${weatherSymbols[weatherCode].emoji} > ${weatherSymbols[weatherCode].description}`;
-        // Arka planı güncellemek için fonksiyonu burada çağırabiliriz
-        updateBackground(weatherCode);
+        weatherSymbol = weatherSymbols[weatherCode];
     } else {
-        weatherSymbol = weatherCode;
+        weatherSymbol = { emoji: weatherCode, description: '' };
     }
     return weatherSymbol;
 }
 
-// Arka plan rengini güncelleyen fonksiyon
-function updateBackground(weatherCode) {
-    var body = document.querySelector("body");
-    var newBackgroundColor;
-
-    // Hava durumuna göre arka plan rengini belirle
-    switch (weatherCode) {
-        case 0:
-        case 1:
-            newBackgroundColor = "linear-gradient(to right, #66BBDD, #73B6D1)";
-            break;
-        case 2:
-            newBackgroundColor = "linear-gradient(to right, #bdc3c7, #2c3e50)";
-            break;
-        case 3:
-            newBackgroundColor = "linear-gradient(to right, #4b6cb7, #182848)";
-            break;
-        case 45:
-        case 48:
-            newBackgroundColor = "linear-gradient(to right, #bdc3c7, #2c3e50)";
-            break;
-        case 51:
-        case 53:
-        case 55:
-        case 56:
-        case 57:
-        case 61:
-        case 63:
-        case 65:
-        case 66:
-        case 67:
-            newBackgroundColor = "linear-gradient(to right, #4b6cb7, #182848)";
-            break;
-        case 71:
-        case 73:
-        case 75:
-        case 77:
-            newBackgroundColor = "linear-gradient(to right, #bdc3c7, #2c3e50)";
-            break;
-        case 80:
-        case 81:
-        case 82:
-            newBackgroundColor = "linear-gradient(to right, #4b6cb7, #182848)";
-            break;
-        case 85:
-        case 86:
-            newBackgroundColor = "linear-gradient(to right, #bdc3c7, #2c3e50)";
-            break;
-        case 95:
-        case 96:
-        case 99:
-            newBackgroundColor = "linear-gradient(to right, #4b6cb7, #182848)";
-            break;
-        default:
-            newBackgroundColor = "linear-gradient(to right, #3494e6, #ec6ead)";
-            break;
-    }
-
-    // Yeni arka plan rengini uygula ve geçiş efektini etkinleştir
-    body.style.transition = "background 1s ease"; // Geçiş süresi artırıldı
-    body.style.background = newBackgroundColor;
-}
-
-// Koordinatları bul
 function koordinatBul() {
     var yerAdi = document.getElementById('yerAdi').value;
 
-    // Show loading message
     var loadingMessage = document.getElementById('loadingMessage');
     loadingMessage.classList.add('show');
     loadingMessage.style.display = 'block';
+    document.body.classList.add('loading'); // Add loading class to body
 
     fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${yerAdi}`)
         .then(response => response.json())
         .then(data => {
-            var latitude = parseFloat(data[0].lat);  // Convert to number
-            var longitude = parseFloat(data[0].lon);  // Convert to number
-
-            console.log('Koordinatlar:', latitude, longitude); // Log coordinates
-
-            // Call the havaDurumuGetir function with the retrieved coordinates
+            var latitude = parseFloat(data[0].lat);
+            var longitude = parseFloat(data[0].lon);
             havaDurumuGetir(latitude, longitude);
         })
         .catch(error => {
@@ -132,17 +60,14 @@ function koordinatBul() {
             document.getElementById('sonuclar').innerHTML = '<p class="koordinatlar">Koordinat bilgisi alınamadı.</p>';
         })
         .finally(() => {
-            // Hide loading message after fetching data
             loadingMessage.classList.remove('show');
             loadingMessage.style.display = 'none';
+            document.body.classList.remove('loading'); // Remove loading class from body
         });
 }
 
-// Enter tuşuna basıldığında koordinatBul fonksiyonunu çağıran event listener ekle
 document.getElementById('yerAdi').addEventListener('keypress', function(event) {
-    // Eğer kullanıcı enter tuşuna bastıysa
     if (event.key === 'Enter') {
-        // Koordinatları bul
         koordinatBul();
     }
 });
@@ -156,73 +81,108 @@ function havaDurumuGetir(latitude, longitude) {
             return response.json();
         })
         .then(data => {
+            console.log(data); // Log the fetched data for debugging
             var currentData = data.current;
             var hourlyData = data.hourly;
+            console.log(hourlyData); // Log the hourly data for debugging
+            if (!hourlyData || hourlyData.length === 0) {
+                console.error('No hourly data available.');
+                return; // Exit if no hourly data
+            }
 
             var anlikVerilerDiv = document.getElementById('anlikVerilerDiv');
             anlikVerilerDiv.innerHTML = `<p class="koordinatlar">Koordinatlar: Enlem ${latitude}, Boylam ${longitude}</p>`;
 
-            // Anlık veriler
             anlikVerilerDiv.innerHTML += `<div class="anlik-veriler-icerik">`;
 
             if (currentData && currentData.temperature_2m !== undefined && currentData.wind_speed_10m !== undefined) {
                 anlikVerilerDiv.innerHTML += `<p>Sıcaklık: ${currentData.temperature_2m} °C</p>`;
                 anlikVerilerDiv.innerHTML += `<p>Rüzgar Hızı: ${currentData.wind_speed_10m} km/sa.</p>`;
                 anlikVerilerDiv.innerHTML += `<p>Nem: %${currentData.relative_humidity_2m}</p>`;
-                anlikVerilerDiv.innerHTML += `<p>Hava Durumu: ${getWeatherSymbol(currentData.weather_code)}</p>`;
-                // Arka planı güncellemek için fonksiyonu burada çağırmaya gerek yok
+                anlikVerilerDiv.innerHTML += `
+                    <div class="weather-condition">
+                        <span class="weather-emoji">${getWeatherSymbol(currentData.weather_code).emoji}</span>
+                        <span class="weather-description">${getWeatherSymbol(currentData.weather_code).description}</span>
+                    </div>`;
             } else {
                 anlikVerilerDiv.innerHTML += '<p>Anlık hava durumu bilgisi bulunamadı.</p>';
             }
 
-            anlikVerilerDiv.innerHTML += `</div>`; // Anlık veriler div kapatma
+            anlikVerilerDiv.innerHTML += `</div>`;
 
             anlikVerilerDiv.style.display = 'block';
 
-            // Saatlik veriler
+            // Clear existing hourly data
+            var containerDiv = document.querySelector('.container');
+            var existingHourlyDiv = document.querySelector('.saatlik-veriler-kutusu');
+            if (existingHourlyDiv) {
+                containerDiv.removeChild(existingHourlyDiv);
+            }
+
+            // Create new hourly data container
             var saatlikVerilerDiv = document.createElement('div');
             saatlikVerilerDiv.classList.add('saatlik-veriler-kutusu');
 
-            saatlikVerilerDiv.innerHTML += `<h2>Saatlik Veriler</h2>`;
-            saatlikVerilerDiv.innerHTML += `<table class="kutu-container">
-                                            <thead>
-                                                <tr>
-                                                    <th>Zaman</th>
-                                                    <th>Sıcaklık (°C)</th>
-                                                    <th>Nem (%)</th>
-                                                    <th>Rüzgar Hızı (km/s)</th>
-                                                    <th>Hava Durumu</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>`;
+            saatlikVerilerDiv.innerHTML += `<div class="hourly-scroll-container">`;
 
-            for (var i = 0; i < hourlyData.time.length; i++) {
-                var timestamp = new Date(hourlyData.time[i]);
-                var formattedDate = ('0' + timestamp.getHours()).slice(-2) + ':' + ('0' + timestamp.getMinutes()).slice(-2);
-                var formattedDateTime = `${timestamp.toLocaleDateString()} ${formattedDate}`; // Tarih ve saat birleştirildi
+            for (let i = 0; i < hourlyData.time.length; i++) {
+                (function(i) {
+                    var timestamp = new Date(hourlyData.time[i]);
+                    var formattedHour = timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); // Format hour
 
-                saatlikVerilerDiv.innerHTML += `<tr>
-                                                <td>🕑 | <b>${formattedDateTime}</b> |</td>
-                                                <td>🌡 | <b>${hourlyData.temperature_2m[i]}</b> |</td>
-                                                <td>💧 | <b>%${hourlyData.relative_humidity_2m[i]}</b> |</td>
-                                                <td>💨 | <b>${hourlyData.wind_speed_10m[i]} km/sa.</b> |</td>
-                                                <td>▶️ | <b>${getWeatherSymbol(hourlyData.weather_code[i])}</b> |</td>
-                                            </tr>`;
+                    // Add a fade-in effect for each hourly data box
+                    setTimeout(() => {
+                        var hourlyDataDiv = document.createElement('div');
+                        hourlyDataDiv.classList.add('hourly-data');
+                        hourlyDataDiv.onclick = function() { showHourlyDetails(i); };
+                        hourlyDataDiv.innerHTML = `
+                            <span>${formattedHour}</span>
+                            <span>${hourlyData.temperature_2m[i]} °C</span>
+                            <span>%${hourlyData.relative_humidity_2m[i]}</span>
+                            <span>${hourlyData.wind_speed_10m[i]} km/sa</span>
+                            <span>${getWeatherSymbol(hourlyData.weather_code[i]).emoji}</span>
+                        `;
+                        saatlikVerilerDiv.appendChild(hourlyDataDiv);
+                        // Trigger fade-in effect
+                        setTimeout(() => {
+                            hourlyDataDiv.style.opacity = 1; // Set opacity to 1 for fade-in
+                        }, 10);
+                    }, i * 300); // 300ms delay for each box
+                })(i);
             }
 
-            saatlikVerilerDiv.innerHTML += `</tbody></table>`;
+            saatlikVerilerDiv.innerHTML += `</div>`; // Close hourly-scroll-container
 
-            // Saatlik veriler div'ini anlık veriler kutusunun dışına ekle
-            var containerDiv = document.querySelector('.container');
             containerDiv.appendChild(saatlikVerilerDiv);
 
-            // Arka plan rengini güncelle
             updateBackground(currentData.weather_code);
         })
         .catch(error => {
             console.error('Hava durumu bilgisi alınamadı:', error);
             var sonuclarDiv = document.getElementById('anlik-veriler-kutusu');
-            sonuclarDiv.innerHTML = '<p class="koordinatlar">Hava durumu bilgisi alınamadı.</p>';
+            sonuclarDiv.innerHTML = '<p class="koordinatlar">Hava durumu bilgisi bulunamadı.</p>';
             sonuclarDiv.style.display = 'block';
         });
 }
+
+// New function to fetch user information based on IP
+function fetchUserInfo() {
+    fetch('http://ip-api.com/json/')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('userIp').innerText = data.query;
+            document.getElementById('userCity').innerText = data.city;
+            document.getElementById('userCountry').innerText = data.country;
+            document.getElementById('userIsp').innerText = data.isp;
+            document.getElementById('userLat').innerText = data.lat;
+            document.getElementById('userLon').innerText = data.lon;
+        })
+        .catch(error => {
+            console.error('Kullanıcı bilgileri alınamadı:', error);
+        });
+}
+
+// Call fetchUserInfo when the page loads
+window.onload = function() {
+    fetchUserInfo();
+};
