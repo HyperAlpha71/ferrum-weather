@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kullanıcı Bilgileri</title>
+    <link rel="stylesheet" href="user-info.css">
+</head>
+<body>
+    <div class="header">
+        <h1>Kullanıcı Bilgileri</h1>
+        <a href="index.html" class="back-button">Geri Dön</a>
+    </div>
+    <div class="container">
+        <div class="user-info-container">
+            <h2>Kullanıcı Detayları</h2>
+            <table id="userInfoTable">
+                <thead>
+                    <tr>
+                        <th>IP Adresi</th>
+                        <th>Şehir</th>
+                        <th>Ülke</th>
+                        <th>ISP</th>
+                        <th>Lat</th>
+                        <th>Lon</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td id="userIp"></td>
+                        <td id="userCity"></td>
+                        <td id="userCountry"></td>
+                        <td id="userIsp"></td>
+                        <td id="userLat"></td>
+                        <td id="userLon"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
